@@ -1,19 +1,18 @@
 module GiveMeSpeed
   class ThresholdCheck
-    attr_reader :download, :upload, :threshold
+    attr_reader :run, :threshold
 
-    def initialize(download, upload, threshold)
-      @download = download
-      @upload = upload
+    def initialize(speed_test_run, threshold)
+      @run = speed_test_run
       @threshold = threshold
     end
 
     def enough_download?
-      download[:amount] >= threshold[:download][:amount]
+      run.download_rate >= threshold[:download]
     end
 
     def enough_upload?
-      upload[:amount] >= threshold[:upload][:amount]
+      run.upload_rate >= threshold[:upload]
     end
   end
 end
