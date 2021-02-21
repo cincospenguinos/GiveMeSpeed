@@ -1,0 +1,31 @@
+PATH
+  remote: .
+  specs:
+    give_me_speed (0.1.0)
+      speedtest
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    httparty (0.18.1)
+      mime-types (~> 3.0)
+      multi_xml (>= 0.5.2)
+    mime-types (3.3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2021.0212)
+    minitest (5.14.3)
+    multi_xml (0.6.0)
+    rake (12.3.3)
+    speedtest (0.2.3)
+      httparty (~> 0.13)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  give_me_speed!
+  minitest (~> 5.0)
+  rake (~> 12.0)
+
+BUNDLED WITH
+   2.1.4
