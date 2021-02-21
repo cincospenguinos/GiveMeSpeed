@@ -8,6 +8,11 @@ module GiveMeSpeed
   class SpeedTest
     attr_reader :last_run
 
+    DEFAULT_CONFIG = {
+      download: 1,
+      upload: 1
+    }
+
     def initialize; end
 
     def test
@@ -15,12 +20,8 @@ module GiveMeSpeed
       ThresholdCheck.new(last_run, thresholds)
     end
 
-    def self.download_threshold=(amt)
-      @@download_amount = amt
-    end
-
-    def self.upload_threshold=(amt)
-      @@upload_amount = amt
+    def self.config=(config = {})
+      @@config = DEFAULT_CONFIG.merge(config)
     end
 
     def self.interface
@@ -35,8 +36,8 @@ module GiveMeSpeed
 
     def thresholds
       {
-        download: @@download_amount || 1,
-        upload: @@upload_amount || 1,
+        download: @@config[:download],
+        upload: @@config[:upload],
       }
     end
   end

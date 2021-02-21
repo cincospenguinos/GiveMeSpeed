@@ -9,14 +9,8 @@ class GiveMeSpeedTest < Minitest::Test
     refute_nil ::GiveMeSpeed::VERSION
   end
 
-  def test_speedtest_test_responds_with_threshold_check
-    speedtest = GiveMeSpeed::SpeedTest.new
-    assert speedtest.test.is_a?(GiveMeSpeed::ThresholdCheck)
-  end
-
   def test_speedtest_respects_provided_thresholds
-    GiveMeSpeed::SpeedTest.download_threshold = 1000
-    GiveMeSpeed::SpeedTest.upload_threshold = 1000
+    GiveMeSpeed::SpeedTest.config = { download: 1000, upload: 1000 }
     speedtest = GiveMeSpeed::SpeedTest.new
     refute speedtest.test.enough_download?
     refute speedtest.test.enough_upload?
