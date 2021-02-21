@@ -1,6 +1,7 @@
 require 'give_me_speed/version'
 require 'give_me_speed/threshold_check'
 require 'give_me_speed/speedtest_interface'
+require 'give_me_speed/message_builder'
 
 module GiveMeSpeed
   class Error < StandardError; end
