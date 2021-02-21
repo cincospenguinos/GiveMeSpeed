@@ -39,3 +39,11 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the GiveMeSpeed project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/cincospenguinos/give_me_speed/blob/main/CODE_OF_CONDUCT.md).
+
+## Features
+
+* Set some expected payment amount
+* Submits tweet when run is too low
+* Setup custom messages requesting to up speed
+* Set expected download/upload speed thresholds to notify ISP
+* Loaded set of ISP twitter handlers to go pester
