@@ -17,6 +17,11 @@ class GiveMeSpeedTest < Minitest::Test
     assert check.enough_download?
   end
 
+  def test_message_for_handles_indicates_download_speed
+    check = GiveMeSpeed::SpeedCheck.new({ download: 100, upload: 1 })
+    assert GiveMeSpeed.tweet_for(check) =~ /I'm paying @comcast for \d+ [a-zA-Z]{4} download but I'm only getting \d+ [a-zA-Z]{4}. What gives?/
+  end
+
   private
 
   def mock_interface
