@@ -2,38 +2,10 @@ require 'speedtest'
 require 'give_me_speed/version'
 require 'give_me_speed/speedtest_interface'
 require 'give_me_speed/tweet_message'
+require 'give_me_speed/speed_check'
 
 module GiveMeSpeed
   def self.tweet_for(speedcheck)
     TweetMessage.new(speedcheck).message
-  end
-
-  class SpeedCheck
-    attr_reader :thresholds
-
-    def initialize(thresholds)
-      @thresholds = thresholds
-      @last_run = nil
-    end
-
-    def enough_upload?
-      last_run.upload_rate >= thresholds[:upload]
-    end
-
-    def enough_download?
-      last_run.download_rate >= thresholds[:download]
-    end
-
-    def last_run
-      @last_run ||= SpeedCheck.interface.run_test
-    end
-
-    def self.interface
-      @@interface ||= SpeedtestInterface.new
-    end
-
-    def self.interface=(interface)
-      @@interface = interface
-    end
   end
 end
