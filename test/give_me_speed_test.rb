@@ -15,7 +15,7 @@ class GiveMeSpeedTest < Minitest::Test
     check = GiveMeSpeed::SpeedCheck.new({ download: 1, upload: 100 })
     refute check.enough_upload?
     assert check.enough_download?
-  end  
+  end
 
   private
 

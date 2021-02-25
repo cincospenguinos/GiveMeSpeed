@@ -1,15 +1,8 @@
 require 'speedtest'
 require 'give_me_speed/version'
+require 'give_me_speed/speedtest_interface'
 
 module GiveMeSpeed
-  class SpeedtestInterface
-    def initialize; end
-
-    def run_test
-      Speedtest::Test.new.run
-    end
-  end
-
   class SpeedCheck
     attr_reader :thresholds
 
