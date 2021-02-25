@@ -11,7 +11,11 @@ module GiveMeSpeed
     end
 
     def message
-      "I'm paying @comcast for 100 Mbps download but I'm only getting #{download_rate}. What gives?"
+      if !speedcheck.enough_download?
+        "I'm paying @comcast for 100 Mbps download but I'm only getting #{download_rate}. What gives?"
+      elsif !speedcheck.enough_upload?
+        "I'm paying @comcast for 100 Mbps upload but I'm only getting #{upload_rate}. What gives?"
+      end
     end
 
     private

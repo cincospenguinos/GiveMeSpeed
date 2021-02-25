@@ -22,6 +22,11 @@ class GiveMeSpeedTest < Minitest::Test
     assert GiveMeSpeed.tweet_for(check) =~ /I'm paying @comcast for \d+ [a-zA-Z]{4} download but I'm only getting \d+ [a-zA-Z]{4}. What gives?/
   end
 
+  def test_message_for_handles_indicates_upload_speed
+    check = GiveMeSpeed::SpeedCheck.new({ download: 1, upload: 100 })
+    assert GiveMeSpeed.tweet_for(check) =~ /I'm paying @comcast for \d+ [a-zA-Z]{4} upload but I'm only getting \d+ [a-zA-Z]{4}. What gives?/
+  end
+
   private
 
   def mock_interface
