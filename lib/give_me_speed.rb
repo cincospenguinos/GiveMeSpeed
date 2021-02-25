@@ -11,10 +11,13 @@ module GiveMeSpeed
     end
 
     def message
+      # TODO: Threshold management
       if !speedcheck.enough_download?
         "I'm paying @comcast for 100 Mbps download but I'm only getting #{download_rate}. What gives?"
       elsif !speedcheck.enough_upload?
         "I'm paying @comcast for 100 Mbps upload but I'm only getting #{upload_rate}. What gives?"
+      else
+        "I'm paying @comcast for 100 Mbps download and 100 Mbps upload but I'm only getting #{download_rate} and #{upload_rate}. What gives?"
       end
     end
 
