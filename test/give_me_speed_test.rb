@@ -5,11 +5,17 @@ class GiveMeSpeedTest < Minitest::Test
     GiveMeSpeed::SpeedCheck.interface = mock_interface
   end
 
-  def test_speed_check_respects_threshold
+  def test_speed_check_respects_threshold_for_download
     check = GiveMeSpeed::SpeedCheck.new({ download: 100, upload: 1 })
     assert check.enough_upload?
     refute check.enough_download?
   end
+
+  def test_speed_check_respects_threshold_for_upload
+    check = GiveMeSpeed::SpeedCheck.new({ download: 1, upload: 100 })
+    refute check.enough_upload?
+    assert check.enough_download?
+  end  
 
   private
 
