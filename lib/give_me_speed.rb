@@ -11,6 +11,8 @@ module GiveMeSpeed
     end
 
     def message
+      return nil unless speedcheck.enough_download? || speedcheck.enough_upload?
+
       # TODO: Threshold management
       if !speedcheck.enough_download?
         "I'm paying @comcast for 100 Mbps download but I'm only getting #{download_rate}. What gives?"
