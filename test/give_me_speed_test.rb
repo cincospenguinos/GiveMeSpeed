@@ -28,12 +28,12 @@ class GiveMeSpeedTest < Minitest::Test
   end
 
   def test_message_for_handles_both
-    check = GiveMeSpeed::SpeedCheck.new({ download: 1, upload: 1 })
+    check = GiveMeSpeed::SpeedCheck.new({ download: 100, upload: 100 })
     assert GiveMeSpeed.tweet_for(check) =~ /I'm paying @comcast for \d+ [a-zA-Z]{4} download and \d+ [a-zA-Z]{4} upload but I'm only getting \d+ [a-zA-Z]{4} and \d+ [a-zA-Z]{4}. What gives?/
   end
 
   def test_message_for_returns_nil_if_no_need_for_tweet
-    check = GiveMeSpeed::SpeedCheck.new({ download: 1, upload: 1 })
+    check = GiveMeSpeed::SpeedCheck.new({ download: 0, upload: 0 })
     assert_nil GiveMeSpeed.tweet_for(check)
   end
 
