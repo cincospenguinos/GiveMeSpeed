@@ -1,5 +1,8 @@
 require 'test_helper'
 
+# "I'm still not getting what I paid for @xfinity. I was promised threshold download but I'm getting amount download #GiveMeSpeed"
+
+
 class GiveMeSpeedTest < Minitest::Test
   def setup
     GiveMeSpeed::SpeedCheck.interface = mock_interface
