@@ -1,48 +1,29 @@
+require_relative './messages/what_gives'
+
 module GiveMeSpeed
   class TweetMessage
     ISP_TWITTER_ACCOUNTS = {
       xfinity: '@xfinity'
     }
 
-    attr_reader :speedcheck
+    attr_reader :speedcheck, :template
 
-    def initialize(speedcheck, isp = nil)
+    def initialize(speedcheck, isp = nil, message_class = nil)
       @speedcheck = speedcheck
       @isp = ISP_TWITTER_ACCOUNTS[isp] || 'my ISP'
+      @template = message_class&.new(@isp, @speedcheck) || WhatGives.new(@isp, @speedcheck)
     end
 
     def message
       return nil if speedcheck.enough_download? && speedcheck.enough_upload?
 
       if !speedcheck.enough_download? && !speedcheck.enough_upload?
-        "I'm paying #{@isp} for #{present_speed(speedcheck.thresholds[:download])} download and #{present_speed(speedcheck.thresholds[:upload])} upload but I'm only getting #{download_rate} and #{upload_rate}. What gives?"
+        template.both
       elsif !speedcheck.enough_upload?
-        "I'm paying #{@isp} for #{present_speed(speedcheck.thresholds[:upload])} upload but I'm only getting #{upload_rate}. What gives?"
+        template.upload
       else
-        "I'm paying #{@isp} for #{present_speed(speedcheck.thresholds[:download])} download but I'm only getting #{download_rate}. What gives?"
+        template.download
       end
-    end
-
-    private
-
-    def download_rate
-      speedcheck.last_run.pretty_download_rate
-    end
-
-    def upload_rate
-      speedcheck.last_run.pretty_upload_rate
-    end
-
-    def present_speed(rate)
-      units = %w(bps Kbps Mbps Gbps Tbps)
-      unit_index = 0
-
-      while rate > 1024
-        rate /= 1024
-        unit_index += 1
-      end
-
-      "#{rate} #{units[unit_index]}"
     end
   end
 end

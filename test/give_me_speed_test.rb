@@ -19,17 +19,18 @@ class GiveMeSpeedTest < Minitest::Test
 
   def test_tweet_for_handles_indicates_download_speed
     check = GiveMeSpeed::SpeedCheck.new({ download: 100, upload: 1 })
-    assert GiveMeSpeed.tweet_for(check) =~ /I'm paying my ISP for \d+ [a-zA-Z]{3,4} download but I'm only getting \d+ [a-zA-Z]{3,4}. What gives?/
+    assert GiveMeSpeed.tweet_for(check) =~ /\d+ [a-zA-Z]{3,4} download/
   end
 
   def test_tweet_for_handles_indicates_upload_speed
     check = GiveMeSpeed::SpeedCheck.new({ download: 1, upload: 100 })
-    assert GiveMeSpeed.tweet_for(check) =~ /I'm paying my ISP for \d+ [a-zA-Z]{3,4} upload but I'm only getting \d+ [a-zA-Z]{3,4}. What gives?/
+    assert GiveMeSpeed.tweet_for(check) =~ /\d+ [a-zA-Z]{3,4} upload/
   end
 
   def test_tweet_for_handles_both
     check = GiveMeSpeed::SpeedCheck.new({ download: 100, upload: 100 })
-    assert GiveMeSpeed.tweet_for(check) =~ /I'm paying my ISP for \d+ [a-zA-Z]{3,4} download and \d+ [a-zA-Z]{3,4} upload but I'm only getting \d+ [a-zA-Z]{3,4} and \d+ [a-zA-Z]{3,4}. What gives?/
+    assert GiveMeSpeed.tweet_for(check) =~ /\d+ [a-zA-Z]{3,4} download/
+    assert GiveMeSpeed.tweet_for(check) =~ /\d+ [a-zA-Z]{3,4} upload/
   end
 
   def test_tweet_for_returns_nil_if_no_need_for_tweet
@@ -46,7 +47,7 @@ class GiveMeSpeedTest < Minitest::Test
   def test_tweet_for_respects_isp
     check = GiveMeSpeed::SpeedCheck.new({ download: 100, upload: 1 })
     GiveMeSpeed.config = { isp: :xfinity }
-    assert GiveMeSpeed.tweet_for(check) =~ /I'm paying @xfinity/
+    assert GiveMeSpeed.tweet_for(check) =~ /@xfinity/
   end
 
   private
