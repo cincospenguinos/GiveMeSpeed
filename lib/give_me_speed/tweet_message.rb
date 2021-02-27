@@ -1,20 +1,25 @@
 module GiveMeSpeed
   class TweetMessage
+    ISP_TWITTER_ACCOUNTS = {
+      xfinity: '@xfinity'
+    }
+
     attr_reader :speedcheck
 
-    def initialize(speedcheck)
+    def initialize(speedcheck, isp = nil)
       @speedcheck = speedcheck
+      @isp = ISP_TWITTER_ACCOUNTS[isp] || 'my ISP'
     end
 
     def message
       return nil if speedcheck.enough_download? && speedcheck.enough_upload?
 
       if !speedcheck.enough_download? && !speedcheck.enough_upload?
-        "I'm paying @comcast for #{present_speed(speedcheck.thresholds[:download])} download and #{present_speed(speedcheck.thresholds[:upload])} upload but I'm only getting #{download_rate} and #{upload_rate}. What gives?"
+        "I'm paying #{@isp} for #{present_speed(speedcheck.thresholds[:download])} download and #{present_speed(speedcheck.thresholds[:upload])} upload but I'm only getting #{download_rate} and #{upload_rate}. What gives?"
       elsif !speedcheck.enough_upload?
-        "I'm paying @comcast for #{present_speed(speedcheck.thresholds[:upload])} upload but I'm only getting #{upload_rate}. What gives?"
+        "I'm paying #{@isp} for #{present_speed(speedcheck.thresholds[:upload])} upload but I'm only getting #{upload_rate}. What gives?"
       else
-        "I'm paying @comcast for #{present_speed(speedcheck.thresholds[:download])} download but I'm only getting #{download_rate}. What gives?"
+        "I'm paying #{@isp} for #{present_speed(speedcheck.thresholds[:download])} download but I'm only getting #{download_rate}. What gives?"
       end
     end
 
