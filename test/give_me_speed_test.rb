@@ -3,7 +3,16 @@ require 'test_helper'
 class GiveMeSpeedTest < Minitest::Test
   def setup
     GiveMeSpeed::SpeedCheck.interface = mock_interface
-    GiveMeSpeed::Config.config = { thresholds: { download: 1000000, upload: 1000000 } }
+    GiveMeSpeed::Config.config = {
+      isp: nil,
+      thresholds: { download: 1000000, upload: 1000000 },
+      twitter_keys: {
+        api_key: 'yup',
+        api_secret: 'yup',
+        access_token: 'yup',
+        access_secret: 'yup'
+      }
+    }
   end
 
   def test_speed_check_respects_threshold_for_download
@@ -75,7 +84,7 @@ class GiveMeSpeedTest < Minitest::Test
   def test_pester_submits_tweet
     GiveMeSpeed::Config.config.twitter_interface = mock_twitter_interface
     GiveMeSpeed.pester!
-    assert mock_twitter_interface.last_message.include?('my ISP')
+    refute mock_twitter_interface.last_message.nil?
   end
 
   private

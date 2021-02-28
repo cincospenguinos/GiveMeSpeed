@@ -1,31 +1,10 @@
-require 'twitter'
 require 'give_me_speed/version'
 require 'give_me_speed/speedtest_interface'
 require 'give_me_speed/tweet_message'
 require 'give_me_speed/speed_check'
+require 'give_me_speed/twitter_interface'
 
 module GiveMeSpeed
-  class TwitterInterace
-    def initialize(twitter_keys)
-      @twitter_keys = twitter_keys
-    end
-
-    def tweet!(message)
-      client.update(message)
-    end
-
-    def client
-      @client ||= Twitter::REST::Client.new do |config|
-        config.consumer_key = @twitter_keys[:api_key]
-        config.consumer_secret = @twitter_keys[:api_secret]
-        config.access_token = @twitter_keys[:access_token]
-        config.access_token_secret = @twitter_keys[:access_secret]
-      end
-    end
-
-    private
-  end
-
   class Config
     attr_reader :opts
 
