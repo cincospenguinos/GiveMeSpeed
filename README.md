@@ -1,6 +1,6 @@
 # GiveMeSpeed
 
-Automated speed test and pestering of your ISP.
+Automated speed test and pestering of your ISP via Twitter.
 
 ## Installation
 
@@ -20,7 +20,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First `require` it, then configure it, and then call `#pester!`:
+
+```ruby
+require 'give_me_speed'
+
+GiveMeSpeed.config = {
+	thresholds: { download: 100, upload: 100 }, # The download and upload speeds you're paying for in bits per second. This is required
+	isp: :xfinity, # Your ISP
+	twitter_keys: { # The keys to interact with the Twitter API. Defaults to environment vars below
+		api_key: ENV['TWITTER_API_KEY'],
+        api_secret: ENV['TWITTER_API_SECRET'],
+        access_token: ENV['TWITTER_ACCESS_TOKEN'],
+        access_secret: ENV['TWITTER_ACCESS_SECRET']
+	}
+}
+
+GiveMeSpeed.pester!
+```
 
 ## Development
 
@@ -39,11 +56,3 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the GiveMeSpeed project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/cincospenguinos/give_me_speed/blob/main/CODE_OF_CONDUCT.md).
-
-## Features
-
-* Set some expected payment amount
-* Submits tweet when run is too low
-* Setup custom messages requesting to up speed
-* Set expected download/upload speed thresholds to notify ISP
-* Loaded set of ISP twitter handlers to go pester
