@@ -1,3 +1,5 @@
+require 'speedtest'
+
 module GiveMeSpeed
   class SpeedtestInterface
     def initialize; end

@@ -1,10 +1,31 @@
-require 'speedtest'
+require 'twitter'
 require 'give_me_speed/version'
 require 'give_me_speed/speedtest_interface'
 require 'give_me_speed/tweet_message'
 require 'give_me_speed/speed_check'
 
 module GiveMeSpeed
+  class TwitterInterace
+    def initialize(twitter_keys)
+      @twitter_keys = twitter_keys
+    end
+
+    def tweet!(message)
+      client.update(message)
+    end
+
+    def client
+      @client ||= Twitter::REST::Client.new do |config|
+        config.consumer_key = @twitter_keys[:api_key]
+        config.consumer_secret = @twitter_keys[:api_secret]
+        config.access_token = @twitter_keys[:access_token]
+        config.access_token_secret = @twitter_keys[:access_secret]
+      end
+    end
+
+    private
+  end
+
   class Config
     attr_reader :opts
 
@@ -39,6 +60,14 @@ module GiveMeSpeed
       all_keys && all_values
     end
 
+    def twitter_interface
+      @interface ||= TwitterInterface.new(opts[:twitter_keys])
+    end
+
+    def twitter_interface=(interface)
+      @interface = interface
+    end
+
     def self.config
       @@config ||= Config.new
     end
@@ -51,7 +80,9 @@ module GiveMeSpeed
 
   def self.pester!
     check = SpeedCheck.new(Config.config.thresholds)
-    message = self.tweet_for(check)
+    if (message = self.tweet_for(check))
+      Config.config.twitter_interface.tweet!(message)
+    end
   end
 
   def self.tweet_for(speedcheck)
