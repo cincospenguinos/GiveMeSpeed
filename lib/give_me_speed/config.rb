@@ -34,7 +34,7 @@ module GiveMeSpeed
     end
 
     def twitter_interface
-      @interface ||= TwitterInterface.new(opts[:twitter_keys])
+      @interface ||= GiveMeSpeed::TwitterInterface.new(opts[:twitter_keys])
     end
 
     def twitter_interface=(interface)
