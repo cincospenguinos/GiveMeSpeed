@@ -3,6 +3,7 @@ require 'test_helper'
 class GiveMeSpeedTest < Minitest::Test
   def setup
     GiveMeSpeed::SpeedCheck.interface = mock_interface
+    GiveMeSpeed::Config.config = { thresholds: { download: 100, upload: 100 } }
   end
 
   def test_speed_check_respects_threshold_for_download
@@ -50,11 +51,41 @@ class GiveMeSpeedTest < Minitest::Test
     assert GiveMeSpeed.tweet_for(check) =~ /@xfinity/
   end
 
+  def test_config_needs_thresholds
+    GiveMeSpeed::Config.config = { thresholds: nil }
+    refute GiveMeSpeed::Config.config.valid?
+  end
+
+  def test_config_needs_twitter_info
+    GiveMeSpeed::Config.config = { twitter_keys: nil }
+    refute GiveMeSpeed::Config.config.valid?
+  end
+
+  def test_config_needs_all_the_twitter_info
+    GiveMeSpeed::Config.config = {
+      twitter_keys: {
+        api_key: 'yes',
+        api_secret: nil,
+        access_token: 'yup'
+      }
+    }
+    refute GiveMeSpeed::Config.config.valid?
+  end
+
+  def test_pester_submits_tweet
+    skip 'This is not ready yet'
+    GiveMeSpeed.config = { twitter_interface: mock_interface }
+    GiveMeSpeed.pester!
+  end
+
   private
 
   def mock_interface
     result = OpenStruct.new(download_rate: 1, upload_rate: 1, pretty_download_rate: '1 Mbps',
       pretty_upload_rate: '1 Mbps')
     OpenStruct.new(run_test: result)
+  end
+
+  def mock_twitter_interface
   end
 end

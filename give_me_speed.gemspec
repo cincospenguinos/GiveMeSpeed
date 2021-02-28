@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency 'speedtest'
+  spec.add_runtime_dependency 'twitter'
 end
