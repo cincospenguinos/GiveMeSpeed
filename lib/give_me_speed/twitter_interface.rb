@@ -1,7 +1,7 @@
 require 'twitter'
 
 module GiveMeSpeed
-  class TwitterInterace
+  class TwitterInterface
     def initialize(twitter_keys)
       @twitter_keys = twitter_keys
     end
